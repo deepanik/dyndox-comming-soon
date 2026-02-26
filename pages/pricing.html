@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | DYNDOX AI</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <style>
+        .price-hero {
+            padding: 120px 48px 60px;
+            text-align: center;
+            background: white;
+        }
+
+        .billing-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 40px 0;
+        }
+
+        .toggle-track {
+            width: 48px;
+            height: 24px;
+            background: var(--border);
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .toggle-knob {
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            left: 3px;
+            top: 3px;
+            transition: 0.3s ease;
+        }
+
+        .toggle-track.active .toggle-knob {
+            left: 27px;
+            background: var(--accent);
+        }
+
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .price-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 48px 32px;
+            text-align: left;
+        }
+
+        .price-card.featured {
+            border-color: var(--black);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            transform: translateY(-10px);
+        }
+
+        .price-val {
+            font-family: var(--font-mono);
+            font-size: 48px;
+            font-weight: 700;
+            margin: 24px 0;
+        }
+
+        .price-sub {
+            font-size: 14px;
+            color: var(--mid-grey);
+        }
+    </style>
+</head>
+
+<body data-dark-hero="false">
+    <!-- SECTION 2: NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="nav-left"><a href="/" class="brand-logo"><img src="/images/logo-dark.png" alt="DYNDOX AI"></a></div>
+        <div class="nav-center">
+            <div class="nav-item">
+                <a href="#" class="nav-link">Solutions <svg viewBox="0 0 10 6" fill="none">
+                        <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg></a>
+                <div class="nav-dropdown">
+                    <a href="/for-founders" class="dropdown-link">
+                        <div class="dropdown-icon">👤</div>
+                        <div>
+                            <div style="font-weight:700; color:var(--black);">For Founders</div>
+                            <div style="font-size:11px; color:var(--mid-grey);">Strategy for early-stage teams</div>
+                        </div>
+                    </a>
+                    <a href="/for-institutions" class="dropdown-link">
+                        <div class="dropdown-icon">🏛️</div>
+                        <div>
+                            <div style="font-weight:700; color:var(--black);">For Institutions</div>
+                            <div style="font-size:11px; color:var(--mid-grey);">University & Campus solutions</div>
+                        </div>
+                    </a>
+                    <a href="/for-incubators" class="dropdown-link">
+                        <div class="dropdown-icon">🚀</div>
+                        <div>
+                            <div style="font-weight:700; color:var(--black);">For Incubators</div>
+                            <div style="font-size:11px; color:var(--mid-grey);">Cohort management systems</div>
+                        </div>
+                    </a>
+                    <a href="/partners" class="dropdown-link">
+                        <div class="dropdown-icon">🤝</div>
+                        <div>
+                            <div style="font-weight:700; color:var(--black);">Partners</div>
+                            <div style="font-size:11px; color:var(--mid-grey);">E-Cells & Ecosystem partners</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <a href="#" class="nav-link">Platform <svg viewBox="0 0 10 6" fill="none">
+                        <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg></a>
+                <div class="nav-dropdown">
+                    <a href="/features" class="dropdown-link">
+                        <div class="dropdown-icon">🛠️</div>
+                        <div>
+                            <div style="font-weight:700; color:var(--black);">Features</div>
+                            <div style="font-size:11px; color:var(--mid-grey);">Explore all 12 core tools</div>
+                        </div>
+                    </a>
+                    <a href="/pricing" class="dropdown-link">
+                        <div class="dropdown-icon">💳</div>
+                        <div>
+                            <div style="font-weight:700; color:var(--black);">Pricing</div>
+                            <div style="font-size:11px; color:var(--mid-grey);">Transparent, founder-friendly plans
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <a href="#" class="nav-link">About <svg viewBox="0 0 10 6" fill="none">
+                        <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg></a>
+                <div class="nav-dropdown">
+                    <a href="/team" class="dropdown-link">
+                        <div class="dropdown-icon">💎</div>
+                        <div>
+                            <div style="font-weight:700; color:var(--black);">Our Team</div>
+                            <div style="font-size:11px; color:var(--mid-grey);">Who is building DYNDOX AI</div>
+                        </div>
+                    </a>
+                    <a href="/blog" class="dropdown-link">
+                        <div class="dropdown-icon">📰</div>
+                        <div>
+                            <div style="font-weight:700; color:var(--black);">Blog</div>
+                            <div style="font-size:11px; color:var(--mid-grey);">Founder insights & updates</div>
+                        </div>
+                    </a>
+                    <a href="/contact" class="dropdown-link">
+                        <div class="dropdown-icon">✉️</div>
+                        <div>
+                            <div style="font-weight:700; color:var(--black);">Contact</div>
+                            <div style="font-size:11px; color:var(--mid-grey);">Get in touch with us</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <a href="/admin" class="nav-login">Login</a>
+            <button class="btn-join">Join Waitlist</button>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Overlay Redesign -->
+    <div class="mobile-overlay">
+        <div class="close-overlay">×</div>
+        <div class="mobile-links">
+            <a href="/for-founders" class="mobile-link">For Founders</a>
+            <a href="/for-institutions" class="mobile-link">For Institutions</a>
+            <a href="/features" class="mobile-link">Features</a>
+            <a href="/pricing" class="mobile-link">Pricing</a>
+            <a href="/team" class="mobile-link">Team</a>
+            <a href="/contact" class="mobile-link">Contact</a>
+        </div>
+        <button class="btn-join" style="width: 100%; height: 60px; margin-top: 20px; font-size: 16px;">Join
+            Waitlist</button>
+    </div>
+
+    <header class="price-hero">
+        <div class="container">
+            <h1 class="headline-xl">Transparent pricing.</h1>
+            <p class="italic" style="font-size: 24px; color: var(--mid-grey);">No surprises.</p>
+
+            <div class="billing-toggle">
+                <span>Monthly</span>
+                <div class="toggle-track" id="billing-toggle">
+                    <div class="toggle-knob"></div>
+                </div>
+                <span>Annual <span style="color:var(--success); font-weight:700;">(-20%)</span></span>
+            </div>
+        </div>
+    </header>
+
+    <section class="section" style="padding-bottom: 0;">
+        <div class="container reveal">
+            <div class="price-grid">
+                <div class="price-card">
+                    <h3>Builder</h3>
+                    <div class="price-val" data-base="2499">₹2,499</div>
+                    <div class="price-sub">/month</div>
+                    <ul class="footer-links" style="margin-top:24px; gap:12px;">
+                        <li>• All 5 AI Executives</li>
+                        <li>• 50 Grant Matches</li>
+                        <li>• Basic War Room</li>
+                    </ul>
+                    <button class="nav__cta"
+                        style="width:100%; margin-top:32px; background:var(--black); border:none;">Choose
+                        Builder</button>
+                </div>
+                <div class="price-card featured">
+                    <h3>Operator</h3>
+                    <div class="price-val" data-base="4999">₹4,999</div>
+                    <div class="price-sub">/month</div>
+                    <ul class="footer-links" style="margin-top:24px; gap:12px;">
+                        <li>• Everything in Builder</li>
+                        <li>• Full Execute Mode</li>
+                        <li>• Intelligent Inbox</li>
+                    </ul>
+                    <button class="nav__cta"
+                        style="width:100%; margin-top:32px; background:var(--black); border:none;">Choose
+                        Operator</button>
+                </div>
+                <div class="price-card">
+                    <h3>Fundraise</h3>
+                    <div class="price-val" data-base="8999">₹8,999</div>
+                    <div class="price-sub">/month</div>
+                    <ul class="footer-links" style="margin-top:24px; gap:12px;">
+                        <li>• Everything in Operator</li>
+                        <li>• Investor Data Room</li>
+                        <li>• Compliance Calendar</li>
+                    </ul>
+                    <button class="nav__cta"
+                        style="width:100%; margin-top:32px; background:var(--black); border:none;">Choose
+                        Fundraise</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: FEATURE COMPARISON -->
+    <section class="section">
+        <div class="container reveal">
+            <h2 class="headline-md" style="text-align: center; margin-bottom: 60px;">Compare all features.</h2>
+            <style>
+                .comp-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 40px;
+                }
+
+                .comp-table th,
+                .comp-table td {
+                    padding: 20px;
+                    border-bottom: 1px solid var(--border);
+                    text-align: left;
+                }
+
+                .comp-table th {
+                    font-weight: 700;
+                    color: var(--black);
+                }
+
+                .comp-table td {
+                    font-size: 14px;
+                    color: var(--mid-grey);
+                }
+
+                .check {
+                    color: var(--success);
+                    font-weight: 700;
+                }
+
+                .dash {
+                    color: var(--border);
+                }
+            </style>
+            <table class="comp-table">
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">Feature</th>
+                        <th>Builder</th>
+                        <th>Operator</th>
+                        <th>Fundraise</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AI Executive Board (All 5 Roles)</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>Morning WhatsApp Briefing</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>Grant Intelligence (Matches)</td>
+                        <td>50/mo</td>
+                        <td>Unlimited</td>
+                        <td>Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td>Execute Mode (Autonomy)</td>
+                        <td class="dash">—</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>Intelligent Inbox (Drafting)</td>
+                        <td class="dash">—</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>Investor Data Room</td>
+                        <td class="dash">—</td>
+                        <td class="dash">—</td>
+                        <td class="check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>Compliance & Legal Calendar</td>
+                        <td class="dash">—</td>
+                        <td class="dash">—</td>
+                        <td class="check">✓</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- NEW: INSTITUTIONAL SECTION -->
+    <section class="section --off-white" style="border-top: 1px solid var(--border);">
+        <div class="container reveal" style="text-align: center;">
+            <h2 class="headline-md">For Incubators & Institutions</h2>
+            <p style="margin: 20px 0 40px; color: var(--mid-grey);">Enterprise-grade cohort management and campus
+                strategy for leading Indian institutions.</p>
+            <div style="display: flex; justify-content: center; gap: 20px;">
+                <button class="nav__cta" style="background: var(--black); border: none;">Request Institution
+                    Demo</button>
+                <button class="nav__cta"
+                    style="background: white; border: 1px solid var(--black); color: var(--black);">View Partner
+                    Deck</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: FAQ SECTION -->
+    <section class="section">
+        <div class="container reveal">
+            <h2 class="headline-md" style="text-align: center; margin-bottom: 60px;">FAQs</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h4 style="margin-bottom: 12px;">Is my data secure?</h4>
+                    <p style="font-size: 14px; color: var(--mid-grey); line-height: 1.6;">Yes. We use enterprise-grade
+                        AES-256 encryption. Your startup's DNA is siloed and never used to train global models.</p>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 12px;">How does 'Execute Mode' work?</h4>
+                    <p style="font-size: 14px; color: var(--mid-grey); line-height: 1.6;">Once calibrated, you can
+                        authorize Aria to take actions—like drafting emails or posting to social media—on your behalf
+                        with one-click approval.</p>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 12px;">What are the Grant sources?</h4>
+                    <p style="font-size: 14px; color: var(--mid-grey); line-height: 1.6;">We track over 200+ Indian
+                        government and private grants, including Startup India, MeitY, and BIRAC schemes.</p>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 12px;">Can I cancel anytime?</h4>
+                    <p style="font-size: 14px; color: var(--mid-grey); line-height: 1.6;">Yes. We offer a 14-day
+                        money-back guarantee and no-lock-in monthly contracts for founders.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="giant-brand-bg">DYNDOX AI</div>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="brand-logo"><img src="/images/logo-dark.png" alt="DYNDOX AI"></div>
+                    <p
+                        style="font-size:14px; color: rgba(0,0,0,0.6); margin-top:20px; max-width:240px; line-height: 1.6;">
+                        The AI executive board for every Indian startup founder, simplified for speed and built for
+                        scale.
+                    </p>
+                    <div class="footer-social-strip">
+                        <a href="#" class="social-icon-btn">𝕏</a>
+                        <a href="#" class="social-icon-btn">in</a>
+                        <a href="#" class="social-icon-btn">ig</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>PLATFORM</h4>
+                    <div class="footer-links">
+                        <a href="/features">Features</a>
+                        <a href="/pricing">Pricing</a>
+                        <a href="/governance">Governance</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>COMPANY</h4>
+                    <div class="footer-links">
+                        <a href="/about">About Us</a>
+                        <a href="/team">Our Team</a>
+                        <a href="/blog">Founder Blog</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>RESOURCES</h4>
+                    <div class="footer-links">
+                        <a href="/contact">Contact Support</a>
+                        <a href="/partners">Partnerships</a>
+                        <a href="/legal">Legal Policy</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span class="copy">© 2026 DYNDOX TECHNOLOGIES INC. — ALL RIGHTS RESERVED.</span>
+                <span class="copy">CRAFTED WITH INTENT IN INDIA 🇮🇳</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/nav.js"></script>
+    <script src="/js/settings.js" defer></script>
+    <script src="/js/tracking.js" defer></script>
+    <script src="/js/animations.js" defer></script>
+    <script>
+        document.getElementById('billing-toggle').addEventListener('click', function () {
+            this.classList.toggle('active');
+            const isAnnual = this.classList.contains('active');
+            document.querySelectorAll('.price-val').forEach(el => {
+                const base = parseInt(el.getAttribute('data-base'));
+                const final = isAnnual ? Math.floor(base * 0.8) : base;
+                el.innerText = '₹' + final.toLocaleString('en-IN');
+            });
+        });
+    </script>
+</body>
+
+</html>
