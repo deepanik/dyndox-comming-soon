@@ -119,6 +119,8 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+      // Avoid forcing HTTP asset requests to HTTPS on temporary/non-matching cert domains.
+      "upgrade-insecure-requests": null,
       "img-src": ["'self'", "data:", "https:"],
       "script-src": ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"],
     },

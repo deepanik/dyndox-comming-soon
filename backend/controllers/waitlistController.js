@@ -1,5 +1,5 @@
 const db = require('../config/db');
-const { sendWaitlistConfirmation } = require('../services/emailService');
+const { sendWaitlistConfirmation, sendAdminNotification } = require('../services/emailService');
 
 const joinWaitlist = (req, res) => {
     const { email, name, segment, source, organisation, city } = req.body;
