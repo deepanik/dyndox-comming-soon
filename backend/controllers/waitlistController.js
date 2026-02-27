@@ -24,8 +24,16 @@ const joinWaitlist = (req, res) => {
 
         res.json({ success: true, count, message: "You're on the list!" });
     } catch (err) {
-        if (err.code === 'SQLITE_CONSTRAINT') {
-            return res.status(400).json({ success: false, error: 'already_registered', message: 'This email is already on the waitlist.' });
+        if (err.code === 'SQLITE_CONSTRAINT' || err.code === 'SQLITE_CONSTRAINT_UNIQUE') {
+            // If user is already in the waitlist, still send the branded confirmation mail.
+            sendWaitlistConfirmation(email, name);
+            const count = db.prepare('SELECT count(*) as count FROM waitlist').get().count;
+            return res.json({
+                success: true,
+                alreadyRegistered: true,
+                count,
+                message: "You're already on the list. We've sent your confirmation email again."
+            });
         }
         console.error('Waitlist Error:', err);
         res.status(500).json({ success: false, error: 'server_error', message: 'Something went wrong on our end.' });

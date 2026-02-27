@@ -1,24 +1,38 @@
 const nodemailer = require('nodemailer');
 
-// Setup transporter (use environment variables for security)
-const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST || 'smtp.ethereal.email',
-    port: process.env.SMTP_PORT || 587,
-    secure: process.env.SMTP_PORT == 465, // true for 465, false for other ports
-    auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-    },
-});
+const smtpHost = process.env.SMTP_HOST;
+const smtpPort = Number(process.env.SMTP_PORT || 587);
+const smtpUser = process.env.SMTP_USER;
+const smtpPass = process.env.SMTP_PASS;
+const smtpConfigured = Boolean(smtpHost && smtpUser && smtpPass);
+
+// Only create transporter when all required SMTP credentials are present.
+const transporter = smtpConfigured
+    ? nodemailer.createTransport({
+        host: smtpHost,
+        port: smtpPort,
+        secure: smtpPort === 465, // true for 465, false for other ports
+        auth: {
+            user: smtpUser,
+            pass: smtpPass,
+        },
+    })
+    : null;
+
+const getFromAddress = () => {
+    const fromName = process.env.SMTP_FROM_NAME || 'DYNDOX';
+    const fromEmail = process.env.SMTP_FROM_EMAIL || smtpUser;
+    return `"${fromName}" <${fromEmail}>`;
+};
 
 const sendWaitlistConfirmation = async (email, name) => {
-    if (!process.env.SMTP_USER) {
-        console.warn('SMTP_USER not configured. Skipping email.');
+    if (!smtpConfigured || !transporter) {
+        console.warn('SMTP not fully configured. Skipping waitlist confirmation email.');
         return;
     }
 
     const mailOptions = {
-        from: `"DYNDOX LAUNCHPAD" <${process.env.SMTP_USER}>`,
+        from: getFromAddress(),
         to: email,
         subject: "Welcome to the Launch Pad Waitlist! 🚀",
         html: `
@@ -65,11 +79,13 @@ const sendWaitlistConfirmation = async (email, name) => {
 };
 
 const sendAdminNotification = async (type, data) => {
-    if (!process.env.SMTP_USER) return;
+    if (!smtpConfigured || !transporter) {
+        return;
+    }
 
     const mailOptions = {
-        from: `"DYNDOX SYSTEM" <${process.env.SMTP_USER}>`,
-        to: process.env.ADMIN_EMAIL || process.env.SMTP_USER,
+        from: getFromAddress(),
+        to: process.env.ADMIN_EMAIL || smtpUser,
         subject: `New ${type}: ${data.name || data.organisation_name}`,
         html: `
             <div style="font-family: sans-serif; padding: 20px;">

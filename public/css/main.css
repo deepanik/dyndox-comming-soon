@@ -592,12 +592,19 @@ ul {
     font-size: 13px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.7);
-    cursor: default;
+    cursor: pointer;
     transition: 180ms ease;
 }
 
 .pill:hover {
     background: rgba(255, 255, 255, 0.1);
+}
+
+.pill.active {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.45);
+    color: #fff;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
 .waitlist-form {

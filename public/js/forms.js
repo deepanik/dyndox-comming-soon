@@ -1,10 +1,92 @@
 document.addEventListener('DOMContentLoaded', () => {
     const waitlistForms = document.querySelectorAll('.waitlist-form');
     waitlistForms.forEach(form => form.addEventListener('submit', handleWaitlistJoin));
+    bindWaitlistSegmentSelector();
+    bindJoinListButtons();
+    handleJoinIntentFromUrl();
+    loadWaitlistCount();
 
     const contactForm = document.getElementById('contact-form');
     if (contactForm) contactForm.addEventListener('submit', handleContactSubmit);
 });
+
+function bindJoinListButtons() {
+    // Only target non-submit Join buttons (nav/mobile CTA buttons).
+    const joinButtons = document.querySelectorAll('button.btn-join:not([type="submit"])');
+    joinButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const form = document.querySelector('.waitlist-form');
+            if (form) {
+                focusWaitlistForm(form);
+                return;
+            }
+
+            // Fallback for pages without embedded waitlist form.
+            window.location.href = '/?intent=join-list';
+        });
+    });
+}
+
+function handleJoinIntentFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const intent = params.get('intent');
+    if (!intent || intent !== 'join-list') {
+        return;
+    }
+
+    const form = document.querySelector('#join-list-form') || document.querySelector('.waitlist-form');
+    if (form) {
+        focusWaitlistForm(form);
+    }
+}
+
+function bindWaitlistSegmentSelector() {
+    const segmentPills = document.querySelectorAll('.audience-pills .pill[data-segment]');
+    if (!segmentPills.length) return;
+
+    const form = document.querySelector('#join-list-form') || document.querySelector('.waitlist-form');
+    if (!form) return;
+
+    const setActiveSegment = (segment) => {
+        form.setAttribute('data-segment', segment);
+        segmentPills.forEach(pill => pill.classList.toggle('active', pill.dataset.segment === segment));
+    };
+
+    segmentPills.forEach(pill => {
+        pill.addEventListener('click', () => setActiveSegment(pill.dataset.segment));
+    });
+
+    const initiallyActive = Array.from(segmentPills).find(pill => pill.classList.contains('active'));
+    setActiveSegment(initiallyActive?.dataset.segment || 'founder');
+}
+
+async function loadWaitlistCount() {
+    try {
+        const response = await fetch('/api/waitlist/count');
+        const data = await response.json();
+        if (typeof data.count === 'number') {
+            updateWaitlistCount(data.count);
+        }
+    } catch (error) {
+        console.error('Unable to fetch waitlist count:', error);
+    }
+}
+
+function updateWaitlistCount(count) {
+    const safeCount = Number.isFinite(Number(count)) ? Number(count) : 0;
+    const formatted = new Intl.NumberFormat('en-IN').format(safeCount);
+    document.querySelectorAll('.waitlist-count').forEach(el => {
+        el.textContent = formatted;
+    });
+}
+
+function focusWaitlistForm(form) {
+    form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const emailInput = form.querySelector('input[type="email"]');
+    if (emailInput) {
+        setTimeout(() => emailInput.focus(), 300);
+    }
+}
 
 async function handleWaitlistJoin(e) {
     e.preventDefault();
